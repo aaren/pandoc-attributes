@@ -17,7 +17,9 @@ attr_dict['classes'] = ['class1', 'class2', 'unnumbered']
 attr_dict['key1'] = 'blah'
 attr_dict['key2'] = '"o\'brien = 1"'
 
-attr_html = '''id="identify" class="class1 class2 unnumbered" key1=blah key2="o'brien = 1"'''
+attr_html = ('''id="identify" '''
+             '''class="class1 class2 unnumbered" '''
+             '''key1=blah key2="o'brien = 1"''')
 
 attr_pandoc = ['identify',
                ['class1', 'class2', 'unnumbered'],
