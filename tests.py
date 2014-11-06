@@ -78,3 +78,10 @@ def test_markdown_special():
     assert(attr.classes == attr_special.classes)
     assert(attr.kvs == attr_special.kvs)
 
+
+def test_markdown_single():
+    attr = PandocAttributes('python', 'markdown')
+
+    assert(attr.id == '')
+    assert(attr.classes == ['python'])
+    assert(attr.kvs == OrderedDict())
