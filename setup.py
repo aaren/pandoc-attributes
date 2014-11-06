@@ -8,7 +8,7 @@ except (IOError, ImportError):
 
 setup(
     name="pandoc-attributes",
-    version='0.1.3',
+    version='0.1.4',
     description="An Attribute class to be used with pandocfilters",
     long_description=long_description,
     py_modules=['pandocattributes'],
