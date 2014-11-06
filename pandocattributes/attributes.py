@@ -1,4 +1,5 @@
 import re
+from collections import OrderedDict
 
 
 class PandocAttributes(object):
@@ -27,7 +28,7 @@ class PandocAttributes(object):
 
     def __init__(self, attr, format='pandoc'):
         if format == 'pandoc':
-            id, classes, kvs = attr
+            id, classes, kvs = self.parse_pandoc(attr)
         elif format == 'markdown':
             id, classes, kvs = self.parse_markdown(attr)
         elif format == 'html':
@@ -42,8 +43,17 @@ class PandocAttributes(object):
         self.kvs = kvs
 
     @classmethod
+    def parse_pandoc(self, attrs):
+        """Read pandoc attributes."""
+        id = attrs[0]
+        classes = attrs[1]
+        kvs = OrderedDict(attrs[2])
+
+        return id, classes, kvs
+
+    @classmethod
     def parse_markdown(self, attr_string):
-        """Read markdown to pandoc attributes."""
+        """Read markdown attributes."""
         attr_string = attr_string.strip('{}')
         splitter = re.compile(self.split_regex(separator=self.spnl))
         attrs = splitter.split(attr_string)[1::2]
@@ -54,14 +64,15 @@ class PandocAttributes(object):
             id = ''
 
         classes = [a[1:] for a in attrs if a.startswith('.')]
-        kvs = [a.split('=', 1) for a in attrs if '=' in a]
         special = ['unnumbered' for a in attrs if a == '-']
         classes.extend(special)
+
+        kvs = OrderedDict(a.split('=', 1) for a in attrs if '=' in a)
 
         return id, classes, kvs
 
     def parse_html(self, attr_string):
-        """Read a html string to pandoc attributes."""
+        """Read a html string to attributes."""
         splitter = re.compile(self.split_regex(separator=self.spnl))
         attrs = splitter.split(attr_string)[1::2]
 
@@ -78,23 +89,24 @@ class PandocAttributes(object):
 
         classes = [m.groups()[0] for m in cls_matches if m][0].split()
 
-        kvs = [a.split('=', 1) for a in attrs if '=' in a]
-        kvs = [(k, v) for k, v in kvs if k not in ('id', 'class')]
-
         special = ['unnumbered' for a in attrs if '-' in a]
         classes.extend(special)
+
+        kvs = [a.split('=', 1) for a in attrs if '=' in a]
+        kvs = OrderedDict((k, v) for k, v in kvs if k not in ('id', 'class'))
 
         return id, classes, kvs
 
     @classmethod
     def parse_dict(self, attrs):
-        """Read a dict to pandoc attributes."""
+        """Read a dict to attributes."""
         attrs = attrs or {}
         ident = attrs.get("id", "")
         classes = attrs.get("classes", [])
-        keyvals = [[x, attrs[x]] for x in attrs
-                    if (x != "classes" and x != "id")]
-        return [ident, classes, keyvals]
+        kvs = OrderedDict((k, v) for k, v in attrs.items()
+                          if k not in ("classes", "id"))
+
+        return ident, classes, kvs
 
     def to_markdown(self):
         """Returns attributes formatted as markdown."""
@@ -106,7 +118,7 @@ class PandocAttributes(object):
         for cls in self.classes:
             attrlist.append('.' + cls)
 
-        for k, v in self.kvs:
+        for k, v in self.kvs.items():
             attrlist.append(k + '=' + v)
 
         return '{' + ' '.join(attrlist) + '}'
@@ -116,7 +128,7 @@ class PandocAttributes(object):
         id, classes, kvs = self.id, self.classes, self.kvs
         id_str = 'id="{}"'.format(id) if id else ''
         class_str = 'class="{}"'.format(' '.join(classes)) if classes else ''
-        key_str = ' '.join('{}={}'.format(k, v) for k, v in kvs)
+        key_str = ' '.join('{}={}'.format(k, v) for k, v in kvs.items())
         return ' '.join((id_str, class_str, key_str)).strip()
 
     def to_dict(self):
@@ -126,4 +138,5 @@ class PandocAttributes(object):
         return d
 
     def to_pandoc(self):
-        return [self.id, self.classes, self.kvs]
+        kvs = [[k, v] for k, v in self.kvs.items()]
+        return [self.id, self.classes, kvs]
