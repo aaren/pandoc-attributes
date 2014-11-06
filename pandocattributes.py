@@ -167,3 +167,11 @@ class PandocAttributes(object):
     @property
     def is_empty(self):
         return self.id == '' and self.classes == [] and self.kvs == {}
+
+    def __getitem__(self, item):
+        if item == 'id':
+            return self.id
+        elif item == 'classes':
+            return self.classes
+        else:
+            return self.kvs.get(item) or {}

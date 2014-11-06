@@ -92,3 +92,12 @@ def test_markdown_single():
 def test_empty():
     attr = PandocAttributes()
     assert attr.is_empty
+
+
+def test_getitem():
+    attr = PandocAttributes()
+    assert attr['id'] == ''
+    assert attr['classes'] == []
+    assert not attr['whatever']
+    attr.kvs['whatever'] = 'dude'
+    assert attr['whatever'] == 'dude'
