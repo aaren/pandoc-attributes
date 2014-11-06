@@ -101,3 +101,13 @@ def test_getitem():
     assert not attr['whatever']
     attr.kvs['whatever'] = 'dude'
     assert attr['whatever'] == 'dude'
+
+
+def test_markdown_format():
+    attr = PandocAttributes()
+    attr.id = 'a'
+    attr.classes = ['b']
+    attr.kvs['c'] = 'd'
+
+    md = attr.to_markdown(format='{classes} {id} {kvs}')
+    assert(md == '{.b #a c=d}')

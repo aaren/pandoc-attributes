@@ -131,20 +131,17 @@ class PandocAttributes(object):
 
         return ident, classes, kvs
 
-    def to_markdown(self):
-        """Returns attributes formatted as markdown."""
-        attrlist = []
+    def to_markdown(self, format='{id} {classes} {kvs}'):
+        """Returns attributes formatted as markdown with optional
+        format argument to determine order of attribute contents.
+        """
+        id = '#' + self.id if self.id else ''
+        classes = ' '.join('.' + cls for cls in self.classes)
+        kvs = ' '.join('{}={}'.format(k, v) for k, v in self.kvs.items())
 
-        if self.id:
-            attrlist.append('#' + self.id)
+        attrs = format.format(id=id, classes=classes, kvs=kvs).strip()
 
-        for cls in self.classes:
-            attrlist.append('.' + cls)
-
-        for k, v in self.kvs.items():
-            attrlist.append(k + '=' + v)
-
-        return '{' + ' '.join(attrlist) + '}'
+        return '{' + attrs + '}'
 
     def to_html(self):
         """Returns attributes formatted as html."""
