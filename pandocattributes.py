@@ -78,7 +78,7 @@ class PandocAttributes(object):
         # match single word attributes e.g. ```python
         if len(attrs) == 1 \
                 and not attr_string.startswith(('#', '.')) \
-                and not '=' in attr_string:
+                and '=' not in attr_string:
             return '', [attr_string], OrderedDict()
 
         try:
