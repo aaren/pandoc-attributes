@@ -4,13 +4,25 @@ import pandocfilters as pf
 
 
 class PandocAttributes(object):
-    """Parser for pandoc block attributes.
+    """Parser / Emitter for pandoc block attributes.
+
+    Can read and write attributes in any of these formats:
+        - markdown
+        - html
+        - dictionary
+        - pandoc
 
     usage:
         attrs = '#id .class1 .class2 key=value'
-        parser = AttributeParser()
-        parser.parse(attrs)
+        attributes = PandocAttributes(attrs, format='markdown')
+        attributes.to_dict()
         >>> {'id': 'id', 'classes': ['class1', 'class2'], 'key'='value'}
+
+        attributes.to_html()
+        >>> id="id" class="class1 class2" key=value
+
+        attributes.to_pandoc()
+        >>> ['id', ['class1', 'class2'], [['key', 'value']]]
     """
     spnl = ' \n'
     split_regex = r'''((?:[^{separator}"']|"[^"]*"|'[^']*')+)'''.format
