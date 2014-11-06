@@ -85,3 +85,8 @@ def test_markdown_single():
     assert(attr.id == '')
     assert(attr.classes == ['python'])
     assert(attr.kvs == OrderedDict())
+
+
+def test_empty():
+    attr = PandocAttributes()
+    assert attr.is_empty

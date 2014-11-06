@@ -163,3 +163,7 @@ class PandocAttributes(object):
     def to_pandoc(self):
         kvs = [[k, v] for k, v in self.kvs.items()]
         return [self.id, self.classes, kvs]
+
+    @property
+    def is_empty(self):
+        return self.id == '' and self.classes == [] and self.kvs == {}
