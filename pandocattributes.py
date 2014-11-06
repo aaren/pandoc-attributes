@@ -39,8 +39,12 @@ class PandocAttributes(object):
     spnl = ' \n'
     split_regex = r'''((?:[^{separator}"']|"[^"]*"|'[^']*')+)'''.format
 
-    def __init__(self, attr, format='pandoc'):
-        if format == 'pandoc':
+    def __init__(self, attr=None, format='pandoc'):
+        if attr is None:
+            id = ''
+            classes = []
+            kvs = OrderedDict()
+        elif format == 'pandoc':
             id, classes, kvs = self.parse_pandoc(attr)
         elif format == 'markdown':
             id, classes, kvs = self.parse_markdown(attr)
