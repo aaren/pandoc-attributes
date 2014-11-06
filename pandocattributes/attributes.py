@@ -1,7 +1,5 @@
 import re
 
-import pandocfilters as pf
-
 
 class PandocAttributes(object):
     """Parser / Emitter for pandoc block attributes.
@@ -89,9 +87,14 @@ class PandocAttributes(object):
         return id, classes, kvs
 
     @classmethod
-    def parse_dict(self, attrd):
+    def parse_dict(self, attrs):
         """Read a dict to pandoc attributes."""
-        return pf.attributes(attrd)
+        attrs = attrs or {}
+        ident = attrs.get("id", "")
+        classes = attrs.get("classes", [])
+        keyvals = [[x, attrs[x]] for x in attrs
+                    if (x != "classes" and x != "id")]
+        return [ident, classes, keyvals]
 
     def to_markdown(self):
         """Returns attributes formatted as markdown."""
