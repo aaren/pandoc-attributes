@@ -131,7 +131,7 @@ class PandocAttributes(object):
 
         return ident, classes, kvs
 
-    def to_markdown(self, format='{id} {classes} {kvs}'):
+    def to_markdown(self, format='{id} {classes} {kvs}', surround=True):
         """Returns attributes formatted as markdown with optional
         format argument to determine order of attribute contents.
         """
@@ -141,7 +141,10 @@ class PandocAttributes(object):
 
         attrs = format.format(id=id, classes=classes, kvs=kvs).strip()
 
-        return '{' + attrs + '}'
+        if surround:
+            return '{' + attrs + '}'
+        elif not surround:
+            return attrs
 
     def to_html(self):
         """Returns attributes formatted as html."""

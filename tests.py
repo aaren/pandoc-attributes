@@ -119,3 +119,11 @@ def test_properties():
     assert(attr.markdown == attr.to_markdown())
     assert(attr.dict == attr.to_dict())
     assert(attr.list == attr.to_pandoc())
+
+
+def test_surround():
+    attr = PandocAttributes(attr_markdown, 'markdown')
+    print attr.to_markdown(surround=False)
+    print attr_markdown.replace('\n', ' ').strip('{}')
+    assert(attr.to_markdown(surround=False)
+           == attr_markdown.replace('\n', ' ').strip('{}'))
