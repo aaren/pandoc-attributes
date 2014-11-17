@@ -191,3 +191,13 @@ class PandocAttributes(object):
             return self.classes
         else:
             return self.kvs.get(item) or {}
+    def __setitem__(self, key, value):
+        if key == 'id':
+            self.id = value
+        elif key == 'classes':
+            self.classes = value
+        else:
+            self.kvs[key] = value
+
+    def __repr__(self):
+        return "pandocfilters.Attributes({})".format(self.to_pandoc())
