@@ -111,3 +111,11 @@ def test_markdown_format():
 
     md = attr.to_markdown(format='{classes} {id} {kvs}')
     assert(md == '{.b #a c=d}')
+
+
+def test_properties():
+    attr = PandocAttributes(attr_markdown, 'markdown')
+    assert(attr.html == attr.to_html())
+    assert(attr.markdown == attr.to_markdown())
+    assert(attr.dict == attr.to_dict())
+    assert(attr.list == attr.to_pandoc())

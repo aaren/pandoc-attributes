@@ -162,6 +162,22 @@ class PandocAttributes(object):
         return [self.id, self.classes, kvs]
 
     @property
+    def markdown(self):
+        return self.to_markdown()
+
+    @property
+    def html(self):
+        return self.to_html()
+
+    @property
+    def dict(self):
+        return self.to_dict()
+
+    @property
+    def list(self):
+        return self.to_pandoc()
+
+    @property
     def is_empty(self):
         return self.id == '' and self.classes == [] and self.kvs == {}
 
