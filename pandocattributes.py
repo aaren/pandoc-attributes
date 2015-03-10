@@ -190,7 +190,8 @@ class PandocAttributes(object):
         elif item == 'classes':
             return self.classes
         else:
-            return self.kvs.get(item) or {}
+            return self.kvs[item]
+
     def __setitem__(self, key, value):
         if key == 'id':
             self.id = value
