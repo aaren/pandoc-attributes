@@ -31,8 +31,8 @@ attr_pandoc = ['identify',
 def test_markdown():
     attr = PandocAttributes(attr_markdown, 'markdown')
 
-    print attr_dict
-    print attr.to_dict()
+    print(attr_dict)
+    print(attr.to_dict())
     nt.assert_dict_equal(attr_dict, attr.to_dict())
     nt.assert_equal(attr_html, attr.to_html())
     nt.assert_equal(attr_markdown.replace('\n', ' '), attr.to_markdown())
@@ -42,8 +42,8 @@ def test_markdown():
 def test_html():
     attr = PandocAttributes(attr_html, 'html')
 
-    print attr_dict
-    print attr.to_dict()
+    print(attr_dict)
+    print(attr.to_dict())
     nt.assert_dict_equal(attr_dict, attr.to_dict())
     nt.assert_equal(attr_html, attr.to_html())
     nt.assert_equal(attr_markdown.replace('\n', ' '), attr.to_markdown())
@@ -53,8 +53,8 @@ def test_html():
 def test_dict():
     attr = PandocAttributes(attr_dict, 'dict')
 
-    print attr_dict
-    print attr.to_dict()
+    print(attr_dict)
+    print(attr.to_dict())
     nt.assert_dict_equal(attr_dict, attr.to_dict())
     nt.assert_equal(attr_html, attr.to_html())
     nt.assert_equal(attr_markdown.replace('\n', ' '), attr.to_markdown())
@@ -64,8 +64,8 @@ def test_dict():
 def test_pandoc():
     attr = PandocAttributes(attr_pandoc, 'pandoc')
 
-    print attr_dict
-    print attr.to_dict()
+    print(attr_dict)
+    print(attr.to_dict())
     nt.assert_dict_equal(attr_dict, attr.to_dict())
     nt.assert_equal(attr_html, attr.to_html())
     nt.assert_equal(attr_markdown.replace('\n', ' '), attr.to_markdown())
@@ -124,7 +124,7 @@ def test_properties():
 
 def test_surround():
     attr = PandocAttributes(attr_markdown, 'markdown')
-    print attr.to_markdown(surround=False)
-    print attr_markdown.replace('\n', ' ').strip('{}')
+    print(attr.to_markdown(surround=False))
+    print(attr_markdown.replace('\n', ' ').strip('{}'))
     assert(attr.to_markdown(surround=False)
            == attr_markdown.replace('\n', ' ').strip('{}'))
