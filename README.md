@@ -1,3 +1,5 @@
+<a href='https://travis-ci.org/aaren/pandoc-attributes'> <img src='https://api.travis-ci.org/aaren/pandoc-attributes.png?branch=master'></a>
+
 This is a simple parser / emitter for pandoc block attributes,
 intended for use with [pandocfilters].
 
