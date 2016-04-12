@@ -98,7 +98,8 @@ def test_getitem():
     attr = PandocAttributes()
     assert attr['id'] == ''
     assert attr['classes'] == []
-    assert not attr['whatever']
+    with nt.assert_raises(KeyError) as _:
+        attr['whatever']
     attr.kvs['whatever'] = 'dude'
     assert attr['whatever'] == 'dude'
 
